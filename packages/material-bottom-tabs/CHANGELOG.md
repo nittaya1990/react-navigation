@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.4](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.2.2...@react-navigation/material-bottom-tabs@6.2.4) (2022-09-16)
+
+
+### Bug Fixes
+
+* use custom theme from paper if configured ([f8feedf](https://github.com/react-navigation/react-navigation/commit/f8feedf8e7cb9363e48fb921304f4cad89f53962))
+
+
+
+
+
+## [6.2.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.2.2...@react-navigation/material-bottom-tabs@6.2.3) (2022-08-24)
+
+
+### Bug Fixes
+
+* use custom theme from paper if configured ([f8feedf](https://github.com/react-navigation/react-navigation/commit/f8feedf8e7cb9363e48fb921304f4cad89f53962))
+
+
+
+
+
+## [6.2.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.2.1...@react-navigation/material-bottom-tabs@6.2.2) (2022-07-05)
+
+
+### Bug Fixes
+
+* ensure same @types/react version in repo ([#10663](https://github.com/react-navigation/react-navigation/issues/10663)) ([e662465](https://github.com/react-navigation/react-navigation/commit/e6624653fbbd931158dbebd17142abf9637205b6)), closes [#10655](https://github.com/react-navigation/react-navigation/issues/10655)
+
+
+
+
+
+## [6.2.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.2.0...@react-navigation/material-bottom-tabs@6.2.1) (2022-04-01)
+
+**Note:** Version bump only for package @react-navigation/material-bottom-tabs
+
+
+
+
+
+# [6.2.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.1.1...@react-navigation/material-bottom-tabs@6.2.0) (2022-04-01)
+
+
+### Features
+
+* add an ID prop to navigators ([4e4935a](https://github.com/react-navigation/react-navigation/commit/4e4935ac2584bc1a00209609cc026fa73e12c10a))
+
+
+
+
+
+## [6.1.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.1.0...@react-navigation/material-bottom-tabs@6.1.1) (2022-02-02)
+
+**Note:** Version bump only for package @react-navigation/material-bottom-tabs
+
+
+
+
+
+# [6.1.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.0.9...@react-navigation/material-bottom-tabs@6.1.0) (2022-01-29)
+
+
+### Features
+
+* **native-stack:** export NativeStackView to support custom routers on native-stack ([#10260](https://github.com/react-navigation/react-navigation/issues/10260)) ([7b761f1](https://github.com/react-navigation/react-navigation/commit/7b761f1cc069ca68b96b5155be726024a345346f))
+
+
+
+
+
+## [6.0.9](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.0.8...@react-navigation/material-bottom-tabs@6.0.9) (2021-10-12)
+
+**Note:** Version bump only for package @react-navigation/material-bottom-tabs
+
+
+
+
+
+## [6.0.8](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.0.7...@react-navigation/material-bottom-tabs@6.0.8) (2021-10-09)
+
+**Note:** Version bump only for package @react-navigation/material-bottom-tabs
+
+
+
+
+
 ## [6.0.7](https://github.com/react-navigation/react-navigation/compare/@react-navigation/material-bottom-tabs@6.0.6...@react-navigation/material-bottom-tabs@6.0.7) (2021-09-26)
 
 **Note:** Version bump only for package @react-navigation/material-bottom-tabs

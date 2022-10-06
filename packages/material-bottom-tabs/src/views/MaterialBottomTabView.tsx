@@ -10,7 +10,12 @@ import {
 } from '@react-navigation/native';
 import * as React from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
-import { BottomNavigation, DarkTheme, DefaultTheme } from 'react-native-paper';
+import {
+  BottomNavigation,
+  DarkTheme,
+  DefaultTheme,
+  useTheme as usePaperTheme,
+} from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type {
@@ -39,7 +44,7 @@ try {
   // Optionally require vector-icons
   MaterialCommunityIcons =
     require('react-native-vector-icons/MaterialCommunityIcons').default;
-} catch (e) {
+} catch (e: any) {
   let isErrorLogged = false;
 
   // Fallback component for icons
@@ -69,7 +74,17 @@ try {
     }
 
     return (
-      <Text {...rest} style={[styles.icon, { color, fontSize: size }]}>
+      // @ts-expect-error: we're passing icon props to text, but we don't care about it since it's just fallback
+      <Text
+        {...rest}
+        style={[
+          styles.icon,
+          {
+            color: typeof color !== 'number' ? color : undefined,
+            fontSize: size,
+          },
+        ]}
+      >
         □
       </Text>
     );
@@ -84,11 +99,16 @@ function MaterialBottomTabViewInner({
 }: Props) {
   const insets = useSafeAreaInsets();
   const { dark, colors } = useTheme();
+  const paperTheme = usePaperTheme();
+
   const buildLink = useLinkBuilder();
 
-  const theme = React.useMemo(() => {
-    const t = dark ? DarkTheme : DefaultTheme;
+  const t =
+    // If the theme from React Navigation and Paper match, then user the customized theme
+    // Otherwise fallback to the matching default theme from Paper
+    dark === paperTheme.dark ? paperTheme : dark ? DarkTheme : DefaultTheme;
 
+  const theme = React.useMemo(() => {
     return {
       ...t,
       colors: {
@@ -97,7 +117,7 @@ function MaterialBottomTabViewInner({
         surface: colors.card,
       },
     };
-  }, [colors, dark]);
+  }, [colors, t]);
 
   return (
     <BottomNavigation

@@ -77,6 +77,10 @@ type Props = {
    * Style object for the wrapper element.
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * Whether label font should scale to respect Text Size accessibility settings.
+   */
+  allowFontScaling?: boolean;
 };
 
 const LinkPressable = ({
@@ -84,6 +88,8 @@ const LinkPressable = ({
   style,
   onPress,
   onLongPress,
+  onPressIn,
+  onPressOut,
   to,
   accessibilityRole,
   ...rest
@@ -111,7 +117,11 @@ const LinkPressable = ({
             onPress?.(e);
           }
         }}
+        // types for PressableProps and TextProps are incompatible with each other by `null` so we
+        // can't use {...rest} for these 3 props
         onLongPress={onLongPress ?? undefined}
+        onPressIn={onPressIn ?? undefined}
+        onPressOut={onPressOut ?? undefined}
       >
         {children}
       </Link>
@@ -141,6 +151,7 @@ export default function DrawerItem(props: Props) {
     labelStyle,
     to,
     focused = false,
+    allowFontScaling,
     activeTintColor = colors.primary,
     inactiveTintColor = Color(colors.text).alpha(0.68).rgb().string(),
     activeBackgroundColor = Color(activeTintColor).alpha(0.12).rgb().string(),
@@ -186,6 +197,7 @@ export default function DrawerItem(props: Props) {
             {typeof label === 'string' ? (
               <Text
                 numberOfLines={1}
+                allowFontScaling={allowFontScaling}
                 style={[
                   {
                     color,

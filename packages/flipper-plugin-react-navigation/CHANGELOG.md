@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.14](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.12...flipper-plugin-react-navigation@1.3.14) (2022-09-16)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.13](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.12...flipper-plugin-react-navigation@1.3.13) (2022-08-24)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.12](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.11...flipper-plugin-react-navigation@1.3.12) (2022-07-05)
+
+
+### Bug Fixes
+
+* ensure same @types/react version in repo ([#10663](https://github.com/react-navigation/react-navigation/issues/10663)) ([e662465](https://github.com/react-navigation/react-navigation/commit/e6624653fbbd931158dbebd17142abf9637205b6)), closes [#10655](https://github.com/react-navigation/react-navigation/issues/10655)
+
+
+
+
+
+## [1.3.11](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.10...flipper-plugin-react-navigation@1.3.11) (2022-04-01)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.10](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.9...flipper-plugin-react-navigation@1.3.10) (2022-04-01)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.9](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.8...flipper-plugin-react-navigation@1.3.9) (2022-03-23)
+
+
+### Bug Fixes
+
+* flipper navigation plugin event table rows selection highlight not working and black theme text not showing ([#10004](https://github.com/react-navigation/react-navigation/issues/10004)) ([94ab791](https://github.com/react-navigation/react-navigation/commit/94ab791cae5061455f036cd3f6bc7fa63167e7c7)), closes [#10003](https://github.com/react-navigation/react-navigation/issues/10003) [#10000](https://github.com/react-navigation/react-navigation/issues/10000)
+
+
+
+
+
+## [1.3.8](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.7...flipper-plugin-react-navigation@1.3.8) (2022-01-29)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.7](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.6...flipper-plugin-react-navigation@1.3.7) (2021-10-12)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
+## [1.3.6](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.5...flipper-plugin-react-navigation@1.3.6) (2021-10-09)
+
+**Note:** Version bump only for package flipper-plugin-react-navigation
+
+
+
+
+
 ## [1.3.5](https://github.com/react-navigation/react-navigation/compare/flipper-plugin-react-navigation@1.3.4...flipper-plugin-react-navigation@1.3.5) (2021-09-26)
 
 

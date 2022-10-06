@@ -7,6 +7,7 @@ import {
 import {
   DrawerActions,
   DrawerNavigationState,
+  DrawerStatus,
   ParamListBase,
   useTheme,
 } from '@react-navigation/native';
@@ -18,7 +19,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
+import * as Reanimated from 'react-native-reanimated';
 import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 import type {
@@ -39,6 +40,7 @@ import { GestureHandlerRootView } from './GestureHandler';
 import { MaybeScreen, MaybeScreenContainer } from './ScreenFallback';
 
 type Props = DrawerNavigationConfig & {
+  defaultStatus: DrawerStatus;
   state: DrawerNavigationState<ParamListBase>;
   navigation: DrawerNavigationHelpers;
   descriptors: DrawerDescriptorMap;
@@ -71,19 +73,27 @@ function DrawerViewBase({
   state,
   navigation,
   descriptors,
+  defaultStatus,
   drawerContent = (props: DrawerContentComponentProps) => (
     <DrawerContent {...props} />
   ),
   detachInactiveScreens = Platform.OS === 'web' ||
     Platform.OS === 'android' ||
     Platform.OS === 'ios',
-  // Running in chrome debugger
-  // @ts-expect-error
-  useLegacyImplementation = !global.nativeCallSyncHook ||
-    // Reanimated 2 is not configured
-    // @ts-expect-error: the type definitions are incomplete
-    !Animated.isConfigured?.(),
+  // Reanimated 2 is not configured
+  // @ts-expect-error: the type definitions are incomplete
+  useLegacyImplementation = !Reanimated.isConfigured?.(),
 }: Props) {
+  // Reanimated v3 dropped legacy v1 syntax
+  const legacyImplemenationNotAvailable =
+    require('react-native-reanimated').abs === undefined;
+
+  if (useLegacyImplementation && legacyImplemenationNotAvailable) {
+    throw new Error(
+      'The `useLegacyImplementation` prop is not available with Reanimated 3 as it no longer includes support for Reanimated 1 legacy API. Remove the `useLegacyImplementation` prop from `Drawer.Navigator` to be able to use it.'
+    );
+  }
+
   const Drawer: React.ComponentType<DrawerProps> = useLegacyImplementation
     ? require('./legacy/Drawer').default
     : require('./modern/Drawer').default;
@@ -91,7 +101,7 @@ function DrawerViewBase({
   const focusedRouteKey = state.routes[state.index].key;
   const {
     drawerHideStatusBarOnOpen = false,
-    drawerPosition = I18nManager.isRTL ? 'right' : 'left',
+    drawerPosition = I18nManager.getConstants().isRTL ? 'right' : 'left',
     drawerStatusBarAnimation = 'slide',
     drawerStyle,
     drawerType = Platform.select({ ios: 'slide', default: 'front' }),
@@ -132,25 +142,29 @@ function DrawerViewBase({
   }, [navigation, state.key]);
 
   React.useEffect(() => {
-    if (drawerStatus !== 'open' || drawerType === 'permanent') {
+    if (drawerStatus === defaultStatus || drawerType === 'permanent') {
       return;
     }
 
-    const handleClose = () => {
+    const handleHardwareBack = () => {
       // We shouldn't handle the back button if the parent screen isn't focused
       // This will avoid the drawer overriding event listeners from a focused screen
       if (!navigation.isFocused()) {
         return false;
       }
 
-      handleDrawerClose();
+      if (defaultStatus === 'open') {
+        handleDrawerOpen();
+      } else {
+        handleDrawerClose();
+      }
 
       return true;
     };
 
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        handleClose();
+        handleHardwareBack();
       }
     };
 
@@ -159,7 +173,7 @@ function DrawerViewBase({
     // This will make sure that our handler will run first when back button is pressed
     const subscription = BackHandler.addEventListener(
       'hardwareBackPress',
-      handleClose
+      handleHardwareBack
     );
 
     if (Platform.OS === 'web') {
@@ -173,7 +187,14 @@ function DrawerViewBase({
         document?.body?.removeEventListener?.('keyup', handleEscape);
       }
     };
-  }, [drawerStatus, drawerType, handleDrawerClose, navigation]);
+  }, [
+    defaultStatus,
+    drawerStatus,
+    drawerType,
+    handleDrawerClose,
+    handleDrawerOpen,
+    navigation,
+  ]);
 
   const renderDrawerContent = () => {
     return (
@@ -191,6 +212,7 @@ function DrawerViewBase({
     return (
       <MaybeScreenContainer
         enabled={detachInactiveScreens}
+        hasTwoStates
         style={styles.content}
       >
         {state.routes.map((route, index) => {
@@ -208,6 +230,7 @@ function DrawerViewBase({
           }
 
           const {
+            freezeOnBlur,
             header = ({ layout, options }: DrawerHeaderProps) => (
               <Header
                 {...options}
@@ -219,6 +242,9 @@ function DrawerViewBase({
                 }
               />
             ),
+            headerShown,
+            headerStatusBarHeight,
+            headerTransparent,
             sceneContainerStyle,
           } = descriptor.options;
 
@@ -228,14 +254,15 @@ function DrawerViewBase({
               style={[StyleSheet.absoluteFill, { zIndex: isFocused ? 0 : -1 }]}
               visible={isFocused}
               enabled={detachInactiveScreens}
+              freezeOnBlur={freezeOnBlur}
             >
               <Screen
                 focused={isFocused}
                 route={descriptor.route}
                 navigation={descriptor.navigation}
-                headerShown={descriptor.options.headerShown}
-                headerTransparent={descriptor.options.headerTransparent}
-                headerStatusBarHeight={descriptor.options.headerStatusBarHeight}
+                headerShown={headerShown}
+                headerStatusBarHeight={headerStatusBarHeight}
+                headerTransparent={headerTransparent}
                 header={header({
                   layout: dimensions,
                   route: descriptor.route,

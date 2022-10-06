@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  I18nManager,
   InteractionManager,
   Keyboard,
   Platform,
@@ -129,7 +130,7 @@ export default function Drawer({
     hideStatusBar(true);
   };
 
-  const onGestureEnd = () => {
+  const onGestureFinish = () => {
     endInteraction();
   };
 
@@ -154,25 +155,21 @@ export default function Drawer({
 
       touchStartX.value = 0;
       touchX.value = 0;
-      translationX.value = withSpring(
-        translateX,
-        {
-          velocity,
-          stiffness: 1000,
-          damping: 500,
-          mass: 3,
-          overshootClamping: true,
-          restDisplacementThreshold: 0.01,
-          restSpeedThreshold: 0.01,
-        },
-        () => {
-          if (translationX.value === getDrawerTranslationX(true)) {
-            runOnJS(onOpen)();
-          } else if (translationX.value === getDrawerTranslationX(false)) {
-            runOnJS(onClose)();
-          }
-        }
-      );
+      translationX.value = withSpring(translateX, {
+        velocity,
+        stiffness: 1000,
+        damping: 500,
+        mass: 3,
+        overshootClamping: true,
+        restDisplacementThreshold: 0.01,
+        restSpeedThreshold: 0.01,
+      });
+
+      if (open) {
+        runOnJS(onOpen)();
+      } else {
+        runOnJS(onClose)();
+      }
     },
     [getDrawerTranslationX, onClose, onOpen, touchStartX, touchX, translationX]
   );
@@ -210,7 +207,9 @@ export default function Drawer({
           : open;
 
       toggleDrawer(nextOpen, event.velocityX);
-      runOnJS(onGestureEnd)();
+    },
+    onFinish: () => {
+      runOnJS(onGestureFinish)();
     },
   });
 
@@ -259,36 +258,50 @@ export default function Drawer({
     return translateX;
   });
 
+  const isRTL = I18nManager.getConstants().isRTL;
   const drawerAnimatedStyle = useAnimatedStyle(() => {
-    if (drawerType === 'permanent') {
-      return {};
-    }
+    const distanceFromEdge = dimensions.width - drawerWidth;
 
     return {
-      transform: [
-        {
-          translateX: drawerType === 'back' ? 0 : translateX.value,
-        },
-      ],
+      transform:
+        drawerType === 'permanent'
+          ? // Reanimated needs the property to be present, but it results in Browser bug
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=20574
+            []
+          : [
+              {
+                translateX:
+                  // The drawer stays in place when `drawerType` is `back`
+                  (drawerType === 'back' ? 0 : translateX.value) +
+                  (drawerPosition === 'left'
+                    ? isRTL
+                      ? -distanceFromEdge
+                      : 0
+                    : isRTL
+                    ? 0
+                    : distanceFromEdge),
+              },
+            ],
     };
   });
 
   const contentAnimatedStyle = useAnimatedStyle(() => {
-    if (drawerType === 'permanent') {
-      return {};
-    }
-
     return {
-      transform: [
-        {
-          translateX:
-            drawerType === 'front'
-              ? 0
-              : drawerPosition === 'left'
-              ? drawerWidth + translateX.value
-              : translateX.value - drawerWidth,
-        },
-      ],
+      transform:
+        drawerType === 'permanent'
+          ? // Reanimated needs the property to be present, but it results in Browser bug
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=20574
+            []
+          : [
+              {
+                translateX:
+                  // The screen content stays in place when `drawerType` is `front`
+                  drawerType === 'front'
+                    ? 0
+                    : translateX.value +
+                      drawerWidth * (drawerPosition === 'left' ? 1 : -1),
+              },
+            ],
     };
   });
 

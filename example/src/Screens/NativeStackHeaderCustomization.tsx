@@ -4,7 +4,14 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { Alert, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Appbar, Button } from 'react-native-paper';
 
 import Albums from '../Shared/Albums';
@@ -128,8 +135,9 @@ export default function NativeStackScreen({
       <NativeStack.Screen
         name="Article"
         component={ArticleScreen}
-        options={({ route }) => ({
+        options={({ route, navigation }) => ({
           title: `Article by ${route.params?.author ?? 'Unknown'}`,
+          headerTintColor: 'white',
           headerTitle: ({ tintColor }) => (
             <Appbar.Action
               color={tintColor}
@@ -137,11 +145,21 @@ export default function NativeStackScreen({
               onPress={onPress}
             />
           ),
+          headerLeft: ({ tintColor, canGoBack }) =>
+            canGoBack ? (
+              <Appbar.Action
+                color={tintColor}
+                icon="arrow-left-thick"
+                onPress={navigation.goBack}
+              />
+            ) : null,
           headerRight: ({ tintColor }) => (
-            <Appbar.Action
-              color={tintColor}
-              icon="bookmark"
-              onPress={onPress}
+            <Appbar.Action color={tintColor} icon="music" onPress={onPress} />
+          ),
+          headerBackground: () => (
+            <Image
+              source={require('../../assets/cpu.jpg')}
+              style={styles.headerBackground}
             />
           ),
         })}
@@ -182,5 +200,11 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 8,
+  },
+  headerBackground: {
+    height: undefined,
+    width: undefined,
+    flex: 1,
+    resizeMode: 'cover',
   },
 });

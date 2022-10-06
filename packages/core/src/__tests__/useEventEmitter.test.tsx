@@ -591,17 +591,17 @@ it('fires custom events added with listeners prop', () => {
         <Screen
           name="first"
           listeners={{ someSuperCoolEvent: firstCallback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="second"
           listeners={{ someSuperCoolEvent: secondCallback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="third"
           listeners={{ someSuperCoolEvent: thirdCallback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
       </TestNavigator>
     </BaseNavigationContainer>
@@ -668,17 +668,17 @@ it("doesn't call same listener multiple times with listeners", () => {
         <Screen
           name="first"
           listeners={{ someSuperCoolEvent: callback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="second"
           listeners={{ someSuperCoolEvent: callback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="third"
           listeners={{ someSuperCoolEvent: callback }}
-          component={jest.fn()}
+          component={React.Fragment}
         />
       </TestNavigator>
     </BaseNavigationContainer>
@@ -723,21 +723,21 @@ it('fires listeners when callback is provided for listeners prop', () => {
           listeners={({ route, navigation }) => ({
             someSuperCoolEvent: (e) => firstCallback(e, route, navigation),
           })}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="second"
           listeners={({ route, navigation }) => ({
             someSuperCoolEvent: (e) => secondCallback(e, route, navigation),
           })}
-          component={jest.fn()}
+          component={React.Fragment}
         />
         <Screen
           name="third"
           listeners={({ route, navigation }) => ({
             someSuperCoolEvent: (e) => thirdCallback(e, route, navigation),
           })}
-          component={jest.fn()}
+          component={React.Fragment}
         />
       </TestNavigator>
     </BaseNavigationContainer>
@@ -838,4 +838,60 @@ it('has option to prevent default', () => {
       canPreventDefault: true,
     });
   });
+});
+
+it('removes only one listener when unsubscribe is called multiple times', () => {
+  const eventName = 'someSuperCoolEvent';
+
+  const TestNavigator = React.forwardRef((props: any, ref: any): any => {
+    const { state, navigation, descriptors } = useNavigationBuilder(
+      MockRouter,
+      props
+    );
+
+    React.useImperativeHandle(ref, () => ({ navigation, state }), [
+      navigation,
+      state,
+    ]);
+
+    return state.routes.map((route) => descriptors[route.key].render());
+  });
+
+  const firstCallback = jest.fn();
+  const secondCallback = jest.fn();
+
+  const Test = ({ navigation }: any) => {
+    React.useEffect(() => {
+      const unsubscribe = navigation.addListener(eventName, firstCallback);
+      unsubscribe();
+
+      // this listener shouldn't be unsubscribed
+      navigation.addListener(eventName, secondCallback);
+      unsubscribe();
+    }, [navigation]);
+
+    return null;
+  };
+
+  const ref = React.createRef<any>();
+
+  const element = (
+    <BaseNavigationContainer>
+      <TestNavigator ref={ref}>
+        <Screen name="first" component={Test} />
+      </TestNavigator>
+    </BaseNavigationContainer>
+  );
+
+  render(element);
+
+  expect(firstCallback).toBeCalledTimes(0);
+  expect(secondCallback).toBeCalledTimes(0);
+
+  act(() => {
+    ref.current.navigation.emit({ type: eventName });
+  });
+
+  expect(firstCallback).toBeCalledTimes(0);
+  expect(secondCallback).toBeCalledTimes(1);
 });

@@ -42,10 +42,12 @@ export type BottomTabNavigationHelpers = NavigationHelpers<
 
 export type BottomTabNavigationProp<
   ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = keyof ParamList
+  RouteName extends keyof ParamList = keyof ParamList,
+  NavigatorID extends string | undefined = undefined
 > = NavigationProp<
   ParamList,
   RouteName,
+  NavigatorID,
   TabNavigationState<ParamList>,
   BottomTabNavigationOptions,
   BottomTabNavigationEventMap
@@ -54,9 +56,10 @@ export type BottomTabNavigationProp<
 
 export type BottomTabScreenProps<
   ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = keyof ParamList
+  RouteName extends keyof ParamList = keyof ParamList,
+  NavigatorID extends string | undefined = undefined
 > = {
-  navigation: BottomTabNavigationProp<ParamList, RouteName>;
+  navigation: BottomTabNavigationProp<ParamList, RouteName, NavigatorID>;
   route: RouteProp<ParamList, RouteName>;
 };
 
@@ -241,6 +244,15 @@ export type BottomTabNavigationOptions = HeaderOptions & {
    * Defaults to `false`.
    */
   unmountOnBlur?: boolean;
+
+  /**
+   * Whether inactive screens should be suspended from re-rendering. Defaults to `false`.
+   * Defaults to `true` when `enableFreeze()` is run at the top of the application.
+   * Requires `react-native-screens` version >=3.16.0.
+   *
+   * Only supported on iOS and Android.
+   */
+  freezeOnBlur?: boolean;
 };
 
 export type BottomTabDescriptor = Descriptor<

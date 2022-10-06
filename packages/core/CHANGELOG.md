@@ -3,6 +3,113 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.4.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.2.2...@react-navigation/core@6.4.0) (2022-09-16)
+
+
+### Bug Fixes
+
+* add missing parentheses typo in useFocusEffect error message ([#10688](https://github.com/react-navigation/react-navigation/issues/10688)) ([9203045](https://github.com/react-navigation/react-navigation/commit/9203045b9c3cd39973b6085e5dfef17d7524f22e))
+* handle path with empty string properly for linking ([#10708](https://github.com/react-navigation/react-navigation/issues/10708)) ([e8c374e](https://github.com/react-navigation/react-navigation/commit/e8c374e0643a1521566c654e0052b53f2fd0667a))
+* potential prototype pollution attacks ([#10455](https://github.com/react-navigation/react-navigation/issues/10455)) ([10e5d2b](https://github.com/react-navigation/react-navigation/commit/10e5d2bbc0b19af7e87ee96e4c402ed6d9d54d79))
+* prevent Object properties to be used as parsing functions ([#10570](https://github.com/react-navigation/react-navigation/issues/10570)) ([7fbd3e5](https://github.com/react-navigation/react-navigation/commit/7fbd3e5025ecf6f5d20b05c0ac2d583d772435ab))
+* strongly type the `component` prop on `RouteConfigComponent` ([#10519](https://github.com/react-navigation/react-navigation/issues/10519)) ([55da7c9](https://github.com/react-navigation/react-navigation/commit/55da7c9b72076c98a65eb4b1b338e990a2f5a21c))
+* wrong setParams type if route does not have params ([#10512](https://github.com/react-navigation/react-navigation/issues/10512)) ([8ed42cd](https://github.com/react-navigation/react-navigation/commit/8ed42cdfe886e0b004319eea7c92d6081bdf289d))
+
+
+### Features
+
+* implement usePreventRemove hook ([#10682](https://github.com/react-navigation/react-navigation/issues/10682)) ([7411516](https://github.com/react-navigation/react-navigation/commit/741151654752e0e55affbc8e04dd4876eaedd760))
+
+
+
+
+
+# [6.3.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.2.2...@react-navigation/core@6.3.0) (2022-08-24)
+
+
+### Bug Fixes
+
+* add missing parentheses typo in useFocusEffect error message ([#10688](https://github.com/react-navigation/react-navigation/issues/10688)) ([9203045](https://github.com/react-navigation/react-navigation/commit/9203045b9c3cd39973b6085e5dfef17d7524f22e))
+* handle path with empty string properly for linking ([#10708](https://github.com/react-navigation/react-navigation/issues/10708)) ([e8c374e](https://github.com/react-navigation/react-navigation/commit/e8c374e0643a1521566c654e0052b53f2fd0667a))
+* potential prototype pollution attacks ([#10455](https://github.com/react-navigation/react-navigation/issues/10455)) ([10e5d2b](https://github.com/react-navigation/react-navigation/commit/10e5d2bbc0b19af7e87ee96e4c402ed6d9d54d79))
+* prevent Object properties to be used as parsing functions ([#10570](https://github.com/react-navigation/react-navigation/issues/10570)) ([7fbd3e5](https://github.com/react-navigation/react-navigation/commit/7fbd3e5025ecf6f5d20b05c0ac2d583d772435ab))
+* strongly type the `component` prop on `RouteConfigComponent` ([#10519](https://github.com/react-navigation/react-navigation/issues/10519)) ([55da7c9](https://github.com/react-navigation/react-navigation/commit/55da7c9b72076c98a65eb4b1b338e990a2f5a21c))
+* wrong setParams type if route does not have params ([#10512](https://github.com/react-navigation/react-navigation/issues/10512)) ([8ed42cd](https://github.com/react-navigation/react-navigation/commit/8ed42cdfe886e0b004319eea7c92d6081bdf289d))
+
+
+### Features
+
+* implement usePreventRemove hook ([#10682](https://github.com/react-navigation/react-navigation/issues/10682)) ([7411516](https://github.com/react-navigation/react-navigation/commit/741151654752e0e55affbc8e04dd4876eaedd760))
+
+
+
+
+
+## [6.2.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.2.1...@react-navigation/core@6.2.2) (2022-07-05)
+
+
+### Bug Fixes
+
+* ensure same @types/react version in repo ([#10663](https://github.com/react-navigation/react-navigation/issues/10663)) ([e662465](https://github.com/react-navigation/react-navigation/commit/e6624653fbbd931158dbebd17142abf9637205b6)), closes [#10655](https://github.com/react-navigation/react-navigation/issues/10655)
+* make event listeners idempotent ([#10667](https://github.com/react-navigation/react-navigation/issues/10667)) ([3bb31e9](https://github.com/react-navigation/react-navigation/commit/3bb31e9821fa723574359c61fcf674bce550f16d)), closes [#10664](https://github.com/react-navigation/react-navigation/issues/10664)
+
+
+
+
+
+## [6.2.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.2.0...@react-navigation/core@6.2.1) (2022-04-01)
+
+
+### Bug Fixes
+
+* return undefined instead of throwing when parent is not found ([28a3993](https://github.com/react-navigation/react-navigation/commit/28a39932490496e7131954f96ce19663ec109d47))
+
+
+
+
+
+# [6.2.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.1.1...@react-navigation/core@6.2.0) (2022-04-01)
+
+
+### Features
+
+* add an ID prop to navigators ([4e4935a](https://github.com/react-navigation/react-navigation/commit/4e4935ac2584bc1a00209609cc026fa73e12c10a))
+
+
+
+
+
+## [6.1.1](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.1.0...@react-navigation/core@6.1.1) (2022-01-29)
+
+
+### Bug Fixes
+
+* removal of non-existing listener should not break updating ref ([#10067](https://github.com/react-navigation/react-navigation/issues/10067)) ([d206ffe](https://github.com/react-navigation/react-navigation/commit/d206ffe77c06595243743f3190f79f723cfd0520))
+* warn for components starting with lower case names ([4b4a7c5](https://github.com/react-navigation/react-navigation/commit/4b4a7c5e78825c63cfe162157f0f9c99a060c040))
+
+
+
+
+
+# [6.1.0](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.0.3...@react-navigation/core@6.1.0) (2021-10-12)
+
+
+### Features
+
+* add a `navigationKey` prop to Screen and Group ([b2fa62c](https://github.com/react-navigation/react-navigation/commit/b2fa62c8ea5c5ad40a3541a7258cba62467e7a56))
+
+
+
+
+
+## [6.0.3](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.0.2...@react-navigation/core@6.0.3) (2021-10-09)
+
+**Note:** Version bump only for package @react-navigation/core
+
+
+
+
+
 ## [6.0.2](https://github.com/react-navigation/react-navigation/compare/@react-navigation/core@6.0.1...@react-navigation/core@6.0.2) (2021-09-26)
 
 

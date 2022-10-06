@@ -5,14 +5,12 @@ executors:
     docker:
       - image: circleci/node:14
     working_directory: ~/project
-    environment:
-      YARN_CACHE_FOLDER: "~/.cache/yarn"
 
   playwright:
     docker:
-    - image: mcr.microsoft.com/playwright:focal
-      environment:
-        NODE_ENV: development
+      - image: mcr.microsoft.com/playwright:focal
+        environment:
+          NODE_ENV: development
 
 commands:
   attach_project:
@@ -28,16 +26,16 @@ jobs:
       - attach_project
       - restore_cache:
           keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
-            - yarn-packages-v1-
+            - yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v3-{{ .Branch }}-
+            - yarn-packages-v3-
       - run:
           name: Install project dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install --immutable
       - save_cache:
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v3-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.yarn/berry/cache
       - persist_to_workspace:
           root: .
           paths:
@@ -74,11 +72,11 @@ jobs:
       - attach_project
       - run:
           name: Build example for web
-          command: yarn example expo build:web --no-pwa
+          command: yarn example expo export:web
       # Yarn does not execute the postinstall scripts if the package is in the cache
       - run:
           name: Install browsers
-          command: yarn playwright install
+          command: npx playwright install
       - run:
           name: Run integration tests
           command: yarn example test:e2e
@@ -89,7 +87,7 @@ jobs:
       - attach_project
       - run:
           name: Build packages in the monorepo
-          command: yarn lerna run prepare
+          command: yarn lerna run prepack
       - run:
           name: Verify built type definitions are correct
           command: yarn typescript

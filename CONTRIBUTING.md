@@ -45,24 +45,22 @@ Remember to add tests for your change if possible. Run the unit tests by:
 yarn test
 ```
 
-Running the e2e tests with Detox (on iOS) requires the following:
-
-- Mac with macOS (at least macOS High Sierra 10.13.6)
-- Xcode 10.1+ with Xcode command line tools
-
-First you need to install `applesimutils` and `detox-cli`:
+Running the e2e tests with Playwright requires building the [example app](/example/) for web:
 
 ```sh
-brew tap wix/brew
-brew install applesimutils
-yarn global add detox-cli
+yarn example expo export:web
 ```
 
-Then you can build and run the tests:
+Before running tests configure Playwright with:
 
 ```sh
-detox build -c ios.sim.debug
-detox test -c ios.sim.debug
+npx playwright install
+```
+
+Run the e2e tests by:
+
+```sh
+yarn example test:e2e
 ```
 
 ### Commit message convention
@@ -72,7 +70,7 @@ We follow the [conventional commits specification](https://www.conventionalcommi
 - `fix`: bug fixes, e.g. fix crash due to deprecated method.
 - `feat`: new features, e.g. add new method to the module.
 - `refactor`: code refactor, e.g. migrate from class components to hooks.
-- `docs`: changes into documentation, e.g. add usage example for the module..
+- `docs`: changes to documentation, e.g. add usage example for the module.
 - `test`: adding or updating tests, eg add integration tests using detox.
 - `chore`: tooling changes, e.g. change CI config.
 
@@ -194,11 +192,11 @@ Community leaders will follow these Community Impact Guidelines in determining t
 ### Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.0,
-available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+available at <https://www.contributor-covenant.org/version/2/0/code_of_conduct.html>.
 
 Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
 
 [homepage]: https://www.contributor-covenant.org
 
 For answers to common questions about this code of conduct, see the FAQ at
-https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations.
+<https://www.contributor-covenant.org/faq>. Translations are available at <https://www.contributor-covenant.org/translations>.
